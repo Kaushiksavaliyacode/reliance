@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Rubik:wght@500&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <style>
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #ecf0f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background: #ecf0f3;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 8px 8px 12px #cbced1, -8px -8px 12px white;
+        overflow: auto;
+    }
+
+    .brand-title {
+        font-weight: 750;
+        font-family: 'Ubuntu', sans-serif;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #4d5ce6;
+        letter-spacing: 1px;
+    }
+
+    .inputs {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    label,
+    input,
+    button {
+        display: inline-block;
+        width: 100%;
+        padding: 8px;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        margin: 5px 0;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    input::placeholder {
+        color: gray;
+        content: "Enter your message!";
+        text-align: center;
+    }
+
+    .input {
+        border: none;
+        border-radius: 15px;
+        padding: 15px;
+        background-color: #e8e8e8;
+        box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+        font-size: medium;
+        font-weight: bold;
+        max-width: 200px;
+    }
+
+    input {
+        background: #e8e8e8;
+        font-size: medium;
+        font-weight: bold;
+        border-radius: 15px;
+        padding: 15px;
+        max-width: 200px;
+        box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+    }
+
+    button {
+        font-family: 'Ubuntu', sans-serif;
+        color: #4d5ce6;
+        padding: 0.7em 1.7em;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 0.5em;
+        background: #e8e8e8;
+        border: 1px solid #e8e8e8;
+        transition: all 0.3s;
+        box-shadow: 6px 6px 12px #c5c5c5,
+                    -6px -6px 12px #ffffff;
+    }
+
+    button:hover {
+        border: 1px solid white;
+    }
+
+    button:active {
+        box-shadow: 4px 4px 12px #c5c5c5,
+                    -4px -4px 12px #ffffff;
+    }
+
+    a {
+        position: absolute;
+        font-size: 8px;
+        bottom: 4px;
+        right: 4px;
+        text-decoration: none;
+        color: rgb(3, 136, 32);
+        background: yellow;
+        border-radius: 10px;
+        padding: 2px;
+    }
+
+    h1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .inputs label {
+        display: inline-block;
+        border: none;
+        border-radius: 15px;
+        padding: 15px;
+        background-color: #e8e8e8;
+        box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+        font-size: 18px;
+        font-weight: bold;
+        white-space: nowrap;
+        line-height: 1;
+        width: 160px;
+        text-align: left;
+        margin-right: 30px;
+    }
+
+    .inputs input {
+        width: 200px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #9e5f5f;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    ul li span {
+        font-weight: 600;
+        font-size: 12px;
+        flex: 1;
+    }
+
+    ul li button {
+        display: none;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    .data-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .data-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-container th,
+    .data-container td {
+        border: none;
+        padding: 5px;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .data-container th {
+        background: #f5f5f5;
+    }
+
+    .data-container tr:hover {
+        background: #f0f0f0;
+    }
+
+    .data-container button {
+        color: #090909;
+        padding: 0.7em 1.7em;
+        font-size: 18px;
+        font-family: 'Ubuntu', sans-serif;
+        border-radius: 0.5em;
+        background: #e8e8e8;
+        border: 1px solid #e8e8e8;
+        transition: all 0.3s;
+        box-shadow: 6px 6px 12px #c5c5c5,
+                    -6px -6px 12px #ffffff;
+    }
+
+    .data-container button:hover {
+        background: #e74c3c;
+    }
+
+    .select-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .select-container select {
+        flex: 1;
+    }
+
+    .custom-dropdown {
+        display: inline-block;
+        position: relative;
+        width: 360px;
+    }
+
+    .custom-dropdown select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 2px solid #4d5ce6;
+        border-radius: 10px;
+        background-color: #ecf0f3;
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .custom-dropdown select:focus {
+        outline: none;
+        border-color: #4d5ce6;
+    }
+
+    .custom-dropdown::before {
+        content: '\25BC';
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #4d5ce6;
+        color: #fff;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        cursor: pointer;
+    }
+
+    .custom-dropdown::before:hover {
+        background-color: #4d5ce6;
+    }
+
+    .custom-dropdown select option {
+        padding: 6px;
+        font-size: 16px;
+    }
+
+    #unit {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 50%;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #e8e8e8;
+    color: #333;
+    font-size: medium;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+}
+
+#unit:focus {
+    outline: none;
+    border-color: #4d5ce6;
+}
+
+#unit::before {
+    content: '\25BC';
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #4d5ce6;
+    color: #fff;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+#unit::before:hover {
+    background-color: #4d5ce6;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-title">Send Data To WhatsApp</div>
+        <form autocomplete="off" method="post" name="DataForm" id="data-form">
+            <div class="custom-dropdown">
+                <select id="party-name">
+                    <option value="">Select a Party</option>
+                    <!-- Populate the options dynamically from the partyNames array -->
+                    <script>
+                        var partyNames = [
+                        "Isha Polypack",
+                            "Gulab Oil And Food Ind - Shapar",
+                            "Heena Sales And Electronics",
+                            "Akka",
+                            "Sterling Tapes - Belgaum",
+                            "Sterling Tapes - Gandhidham",
+                            "Gulab Oil And Food Ind - Vasai",
+                            "Kalyani Polymers",
+                            "Jay Somnath",
+                            "Gariox Industries",
+                            "Signot Industries",
+                            "Pavan",
+                            "Har Bhole Oil Mill",
+                            "Jayshree Oil Mill",
+                            "Kakkad Brothers",
+                            "Dev Industries",
+                            "Devam Enterprise",
+                            "Shree Gita - Morbi",
+                            "Darshan Plastic - Rajkot",
+                            "Narayan Plastic - Rajkot",
+                            "Chetan Plastic - Bhavnagar",
+                            "Chandubhai",
+                            "Local",
+                            "Ravi Oil Refinery",
+                            "Hiesh Bhai",
+                            "Sai Plastic",
+                            "Shivam Enterprise",
+                            "United Industries - Himmatnagar",
+                            "Akash Polymers",
+                            "Hindocare (India) Private Limited",
+                            "Packon Industries - Morbi",
+                            "Srichakra International",
+                            "Amrut Agro - Gondal",
+                            "Amrutlal And Sones - Rajkot",
+                            "Hindaun Slate - Hindaun City",
+                            "Vikas Pack Plast - jetpur",
+                            "Uma Plastic - Jetpur",
+                            "Rapar",
+                            "Laxmi Traders",
+                            "Hindustan Adhesives Limited",
+                            "Mangarol Oil Mill",
+                            "A5 Packaging - Baroda",
+                            "Priya Chemicals - Jamnagar",
+                            "Valley Textiles - Morbi",
+                            "Mario Industries - Bhivandi",
+                            "Sai Plastic - Surat",
+                            "Nilkanth Gruh Udhyog - Botad",
+                            "Kusum Plastic - Bangalore",
+                            "D D Industries - Amravati",
+                            "Finetech Print World",
+                            "M K Shrink - Ahemdabad",
+                            "Makers Polyshrink - Gundlav",
+                            "Consol Flexibles Pvt Ltd. - Padra",
+                            "Ashray Agency - Gondal",
+                            "Pelican Architectural hardware",
+                            "Gita Pharmacy - Rajkot",
+                            "Bluevel Kitchenware - Rajkot",
+                            "Radhe Oil Mill - Halvad",
+                            "Vinayak Plastic - Morbi",
+                            "Prime Packaging (Bhanu)",
+                            "Harihar Food Pvt. Ltd. - vatva",
+                            "Galaxy Industries - Gondal",
+                            "Shrinathji Apex - Rajkot",
+                            "Shiv Plastic -	Bhavnagar",
+                            "Plaax Corporation - Junagadh",
+                            "Pentagone Plastic - Bangalore",
+                            "Intas Pharmaceuticals Pvt Ltd",
+                            "Radhe Labels - Ankleshwar",
+                            "Tanvika Polymers Pvt Ltd - Savli",
+                            "GNS Print - Asangaon",
+                            "Sagitta Printech - Padavla",
+                            "J B Corporaton - Rajkot",
+                            "S & S Wrap & Foils Pvt Ltd - Vadodara",
+                            "Shyam Polypack - Naroda",
+                            "Eklavya Enterprices - Rajkot",
+                            "Detroja Oil Mill - Botad",
+                            "jay Bhole",
+                            "vasundhara Oil Mill",
+                            "Chavo Overseas - Bangalore",
+                            "Sarnam Enterprise",
+                            "Pelican Architectural - Rajkot",
+                            "Baldha Enterprise",
+                            "Aemez Industries",
+                            "Unique Traders - Surendranagar",
+                            "Agam Solutions",
+                            "Sanskar Oil Mill",
+                            "Sharnam Polypack Industries",
+                            
+
+                            // Add more party names here
+                        ];
+                        partyNames.sort();
+                        var partyDropdown = document.getElementById("party-name");
+                        partyNames.forEach(function (partyName) {
+                            var option = document.createElement("option");
+                            option.value = partyName;
+                            option.textContent = partyName;
+                            partyDropdown.appendChild(option);
+                        });
+                    </script>
+                </select>
+            </div>
+            <div class="inputs">
+                <label for="size">Size:</label>
+                <input type="text" id="size">
+                
+                <label for="unit">Unit:</label>
+                <select id="unit">
+                    <option value="Select">Select</option>
+                    <option value="Round">Round</option>
+                    <option value="St.seal">St.seal</option>
+                    <option value="Open">Open</option>
+                </select>
+                
+                <label for="weight">Weight (KG):</label>
+                <input type="number" id="weight">
+                
+                <label for="pcs">Pcs (PCS):</label>
+                <input type="number" id="pcs">
+                
+                <label for="bundle">Bundle:</label>
+                <input type="number" id="bundle">
+                
+                <label for="date">Date:</label>
+                <input type="date" id="date">
+            </div>
+            
+            <button type="button" id="add-data-btn">Add Data</button>
+            <button type="button" id="send-whatsapp-btn">Send Via WhatsApp</button>
+            
+            <div id="data-list" class="data-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Party Name</th>
+                            <th>Size</th>
+                            <th>Weight (KG)</th>
+                            <th>Pcs/Rolls</th>
+                            <th>Bundle</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-items"></tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var dataList = [];
+
+        document.getElementById("add-data-btn").addEventListener("click", function() {
+            addData();
+        });
+
+        document.getElementById("send-whatsapp-btn").addEventListener("click", function() {
+            openWhatsApp();
+        });
+
+        function addData() {
+            var partyNameDropdown = document.querySelector("#party-name");
+            var selectedPartyName = partyNameDropdown.value;
+            var size = document.querySelector("#size").value;
+            var weight = document.querySelector("#weight").value;
+            var pcs = document.querySelector("#pcs").value;
+            var bundle = document.querySelector("#bundle").value;
+            var unitDropdown = document.querySelector("#unit");
+            var selectedUnit = unitDropdown.value;
+            var date = document.querySelector("#date").value;
+
+            var isMM = size.toLowerCase().includes("mm");
+            var displayPcs = isMM ? "" : (pcs ? pcs + " " : "");
+            var displayRolls = isMM ? (pcs ? pcs + " " : "") : "";
+
+            if (selectedPartyName && size && weight) {
+                var data = {
+                    partyName: selectedPartyName,
+                    size: size,
+                    weight: weight,
+                    pcs: displayPcs,
+                    rolls: displayRolls,
+                    bundle: bundle ? bundle + " 📦" : "",
+                    unit: selectedUnit,
+                    date: date,
+                };
+                dataList.push(data);
+                updateDataList();
+                sendToGoogleSheet(data); // Send data to Google Sheet
+
+                // Clear input fields
+                document.querySelector("#size").value = "";
+                document.querySelector("#weight").value = "";
+                document.querySelector("#pcs").value = "";
+                document.querySelector("#bundle").value = "";
+                document.querySelector("#date").value = "";
+            }
+        }
+
+        function removeData(index) {
+            dataList.splice(index, 1);
+            updateDataList();
+        }
+
+        function updateDataList() {
+            var dataListTable = document.querySelector("#data-items");
+            dataListTable.innerHTML = "";
+
+            dataList.forEach(function (data, index) {
+                var row = document.createElement("tr");
+
+                var partyNameCell = document.createElement("td");
+                var sizeCell = document.createElement("td");
+                var weightCell = document.createElement("td");
+                var unitCell = document.createElement("td");
+                var pcsRollsCell = document.createElement("td");
+                var bundleCell = document.createElement("td");
+                var dateCell = document.createElement("td");
+                var actionsCell = document.createElement("td");
+
+                partyNameCell.textContent = data.partyName;
+                sizeCell.textContent = "Size: " + data.size;
+                weightCell.textContent = "Weight: " + data.weight + " KG";
+                unitCell.textContent = "Unit: " + data.unit;
+                if (data.pcs) {
+                    pcsRollsCell.textContent = "Pcs: " + data.pcs;
+                } else if (data.rolls) {
+                    pcsRollsCell.textContent = "Rolls: " + data.rolls;
+                }
+                if (data.bundle) {
+                    bundleCell.textContent = "Bundle: " + data.bundle;
+                }
+                dateCell.textContent = "Date: " + data.date;
+
+                var removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.addEventListener("click", function () {
+                    removeData(index);
+                });
+
+                actionsCell.appendChild(removeButton);
+
+                row.appendChild(partyNameCell);
+                row.appendChild(sizeCell);
+                row.appendChild(weightCell);
+                row.appendChild(unitCell);
+                if (data.pcs || data.rolls) {
+                    row.appendChild(pcsRollsCell);
+                }
+                if (data.bundle) {
+                    row.appendChild(bundleCell);
+                }
+                row.appendChild(dateCell);
+                row.appendChild(actionsCell);
+
+                dataListTable.appendChild(row);
+            });
+        }
+
+        function sendToGoogleSheet(data) {
+            var formData = new FormData();
+            formData.append('partyName', data.partyName);
+            formData.append('size', data.size);
+            formData.append('weight', data.weight);
+            formData.append('pcs', data.pcs);
+            formData.append('bundle', data.bundle);
+            formData.append('date', data.date);
+
+            fetch('https://script.google.com/macros/s/AKfycbyyYEaIwsErvHe2AR8U1u0SvLioOUugCRmElXc7oTHQnKiCT1BRwmu43Iqp-bBwxzE_/exec', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data sent to Google Sheets successfully');
+                } else {
+                    console.error('Failed to send data to Google Sheets');
+                }
+            })
+            .catch(error => {
+                console.error('An error occurred while sending data to Google Sheets:', error);
+            });
+        }
+
+        function openWhatsApp() {
+            var message = "";
+
+            dataList.forEach(function (data) {
+                if (data.size && data.weight) {
+                    var sizeUnit = data.size;
+                    if (!data.size.includes("MM") && data.unit && data.unit !== 'Select') {
+                        sizeUnit += " " + data.unit;
+                    }
+                    message += "_________________________________\n" +
+                        "     Size:        *" + sizeUnit + "*\n" +
+                        "     Weight:   *" + data.weight + " KG*\n";
+
+                    if (data.pcs) {
+                        message += "     Pcs:         *" + data.pcs + " Pcs*\n";
+                    } else if (data.rolls) {
+                        message += "     Rolls:       *" + data.rolls + " Rolls*\n";
+                    }
+
+                    if (data.bundle) {
+                        message += "     Bundle:   *" + data.bundle + "*\n";
+                    }
+                }
+            });
+
+            var partyNameDropdown = document.querySelector("#party-name");
+            var selectedPartyName = partyNameDropdown.value;
+            var boldedPartyName = "*" + selectedPartyName + "*";
+
+            var spacedMessage = "➡️ " + boldedPartyName + "\n" + "     ".repeat(5) + message;
+
+            var whatsappLink = "https://wa.me/?text=" + encodeURIComponent(spacedMessage);
+            window.open(whatsappLink, "_blank");
+        }
+    </script>
+</body>
+</html>

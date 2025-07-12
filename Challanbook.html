@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Billing Book</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #4d7bfc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 100%;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th, td {
+            padding: 12px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+        table input[type="number"] {
+            width: calc(100% - 20px);
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4d7bfc;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1e0494;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-table th, .result-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        .result-table th {
+            background-color: #f4f4f4;
+        }
+        @media (max-width: 600px) {
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .form-group label {
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Challan Book</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Weight</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" id="weight1" step="0.01"></td>
+                    <td><input type="number" id="price1" step="0.01"></td>
+                    <td id="total1">0</td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="weight2" step="0.01"></td>
+                    <td><input type="number" id="price2" step="0.01"></td>
+                    <td id="total2">0</td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="weight3" step="0.01"></td>
+                    <td><input type="number" id="price3" step="0.01"></td>
+                    <td id="total3">0</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label for="percentage">Percentage (%):</label>
+            <input type="number" id="percentage" step="0.01">
+        </div>
+        <button onclick="calculateTotal()">Calculate</button>
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total without (%)</td>
+                    <td id="result-totalWithoutPercentage">0</td>
+                </tr>
+                <tr>
+                    <td>Total (%)</td>
+                    <td id="result-totalPercentage">0</td>
+                </tr>
+                <tr>
+                    <td>Grand Total</td>
+                    <td id="result-overallTotal">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    function calculateTotal() {
+        const weights = [
+            parseFloat(document.getElementById('weight1').value) || 0,
+            parseFloat(document.getElementById('weight2').value) || 0,
+            parseFloat(document.getElementById('weight3').value) || 0
+        ];
+        const prices = [
+            parseFloat(document.getElementById('price1').value) || 0,
+            parseFloat(document.getElementById('price2').value) || 0,
+            parseFloat(document.getElementById('price3').value) || 0
+        ];
+        const percentage = parseFloat(document.getElementById('percentage').value) || 0;
+
+        const weightTotals = weights.map((weight, index) => {
+            const total = weight * prices[index];
+            document.getElementById(`total${index + 1}`).textContent = Math.trunc(total); // Using Math.trunc() to remove decimals
+            return total;
+        });
+
+        const totalWithoutPercentage = weightTotals.reduce((acc, curr) => acc + curr, 0);
+        const totalPercentage = totalWithoutPercentage * (percentage / 100);
+        
+        document.getElementById('result-totalWithoutPercentage').textContent = Math.trunc(totalWithoutPercentage); // Using Math.trunc() for overall totals
+        document.getElementById('result-totalPercentage').textContent = Math.trunc(totalPercentage); // Using Math.trunc() for percentage totals
+        document.getElementById('result-overallTotal').textContent = Math.trunc(totalWithoutPercentage + totalPercentage); // Using Math.trunc() for overall total
+    }
+</script>
+</body>
+</html>

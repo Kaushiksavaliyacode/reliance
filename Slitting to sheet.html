@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Entry Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Rubik:wght@500&family=Ubuntu:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      width: 80%;
+      margin: 0 auto; /* Center the container horizontally */
+      align-items: center; /* Center the container vertically */
+    }
+
+    .brand-logo {
+      text-align: center;
+    }
+
+    .brand-title {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+
+    .inputs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+    }
+
+    label {
+      margin-top: 10px;
+      height: 30px; /* Set a fixed height for all labels */
+      display: flex;
+      align-items: center; /* Vertically center text */
+    }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    input::placeholder {
+      color: rgba(0, 0, 0, 0.3); /* Change the color of the placeholder text */
+      font-size: 12px;
+    }
+
+    .small-label {
+      font-size: 15px;
+    }
+
+    .gradient-button {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;    
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 19px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 205%;
+  margin-top: 5px;
+  margin-right: 0; /* Add this line to remove right margin */
+  margin-left: 0;  /* Add this line to remove left margin */
+  transition: background 0.3s;
+}
+
+    .gradient-button:hover {
+      background: linear-gradient(45deg, #08550c, #024705);
+    }
+  </style>
+</head>
+<body>
+  <form autocomplete="off" method="post" name="DataForm" id="data-form">
+    <div class="container">
+      <div class="inputs">
+        <label class="small-label"><strong>Date</strong></label>
+        <input type="date" name="Date" required />
+        <label class="small-label"><strong>Size</strong></label>
+        <input type="number" name="Size" placeholder="Enter Size" required />
+        <label class="small-label"><strong>Weight</strong></label>
+        <input type="text" name="Weight" placeholder="Enter Weight" required />
+        <label class="small-label"><strong>Micron</strong></label>
+        <input type="number" name="Micron" placeholder="Enter Micron" required />
+        <label class="small-label"><strong>Rolls</strong></label>
+        <input type="number" name="Rolls" placeholder="Enter Rolls" required />
+        <label class="small-label"><strong>Bundles</strong></label>
+        <input type="number" name="Bundles" placeholder="Enter Bundles" required />
+        <label class="small-label"><strong>Party Code</strong></label>
+        <input type="number" name="PartyCode" placeholder="Enter Party Code" required />
+        <label class="small-label"><strong>Job No</strong></label>
+        <input type="number" name="JobNo" placeholder="Enter Job No" required />
+        <button type="submit" class="gradient-button">Submit</button>
+      </div>
+    </div>
+  </form>
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlRxMs06ZmiXJZ5V8E4KZwkybHP6AjYbmki3oQfvOHTpjcrEP_80RJHSxt0EHKBXAyMw/exec';
+    const form = document.getElementById('data-form');
+  
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          // Data saved successfully, you can clear the form if needed
+          form.reset();
+        } else {
+          console.error('Error! Data was not saved.');
+        }
+      } catch (error) {
+        console.error('Error!', error.message);
+      }
+    });
+  </script>
+</body>
+</html>

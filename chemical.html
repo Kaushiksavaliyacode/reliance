@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Resin Calculation</title>
+    <style>
+        /* Reset default margin and padding for the entire page */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Style the rounded square element */
+        .rounded-square {
+            width: 330px; /* Adjust the width as needed */
+            height: 120px; /* Adjust the height as needed */
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            position: absolute;
+            top: -30px; /* Adjust the distance from the top of the container */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            border-radius: 50px; /* Adjust the border radius for roundness */
+            z-index: 1; /* Ensure the square is above the content */
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff; /* White color for text */
+            position: relative;
+            z-index: 2; /* Set z-index to 2 to position it in front of the rounded square */
+        }
+
+        /* Style the tab buttons */
+        .tab {
+            display: flex;
+            justify-content: center; /* Horizontally center-align the tabs */
+            margin-top: 20px;
+        }
+
+        .tab button {
+            background-color: #4158D0;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            border-radius: 10px; /* Adjust the radius value to control the roundness */
+            font-weight: bold;
+        }
+
+        .tab button:hover {
+            background-color: #032952;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Style the input and result tables */
+        .input-group {
+            margin-top: 20px;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #eeecec;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            color: #0074d9; /* Blue color */
+            font-weight: bold;
+        }
+
+        /* Style the results in black color */
+        table td {
+            color: #048b38; /* Black color */
+            font-weight: bold;
+        }
+
+        /* Style the buttons within the table if you have any */
+        table button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        table button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Add the rounded square element inside the container at the top -->
+        <div class="rounded-square"></div>
+        <h1>Resin Calculation</h1>
+        <!-- Tab buttons for 65mm and 45mm -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'tab65')">65 MM</button>
+            <button class="tablinks" onclick="openTab(event, 'tab45')">45 MM</button>
+        </div>
+     
+        <!-- Form for 65mm -->
+        <div id="tab65" class="tabcontent">
+            <div class="input-group">
+                <label for="EnterBags65"><strong>Enter Bags:</strong></label>
+                <input type="number" id="EnterBags65" placeholder="Enter Bags">
+            </div>
+            <div class="result">
+                <p>Results:</p>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight</th>
+                    </tr>
+                    <tr>
+                        <td>NBS</td>
+                        <td id="NBS65">-</td>
+                    </tr>
+                    <tr>
+                        <td>G161</td>
+                        <td id="G16165">-</td>
+                    </tr>
+                    <tr>
+                        <td>DOP</td>
+                        <td id="DOP65">-</td>
+                    </tr>
+                    <tr>
+                        <td>STABILIZER</td>
+                        <td id="STABILIZER65">-</td>
+                    </tr>
+                    <tr>
+                        <td>EPOXY</td>
+                        <td id="EPOXY65">-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Form for 45mm -->
+        <div id="tab45" class="tabcontent">
+            <div class="input-group">
+                <label for="EnterBags45"><strong>Enter Bags:</strong></label>
+                <input type="number" id="EnterBags45" placeholder="Enter Bags">
+            </div>
+            <div class="result">
+                <p>Results:</p>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight</th>
+                    </tr>
+                    <tr>
+                        <td>NBS</td>
+                        <td id="NBS45">-</td>
+                    </tr>
+                    <tr>
+                        <td>DOP</td>
+                        <td id="DOP45">-</td>
+                    </tr>
+                    <tr>
+                        <td>STABILIZER</td>
+                        <td id="STABILIZER45">-</td>
+                    </tr>
+                    <tr>
+                        <td>EPOXY</td>
+                        <td id="EPOXY45">-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Show the 65mm tab by default
+        document.getElementById("tab65").style.display = "block";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const EnterBagsInput65 = document.getElementById("EnterBags65");
+            const NBSOutput65 = document.getElementById("NBS65");
+            const G161Output65 = document.getElementById("G16165");
+            const DOPOutput65 = document.getElementById("DOP65");
+            const STABILIZEROutput65 = document.getElementById("STABILIZER65");
+            const EPOXYOutput65 = document.getElementById("EPOXY65");
+
+            EnterBagsInput65.addEventListener("input", function () {
+                const EnterBags = parseFloat(EnterBagsInput65.value);
+
+                if (!isNaN(EnterBags)) {
+                    const NBS = (EnterBags / 40 * 9.000).toFixed(3);
+                    const G161 = (EnterBags / 40 * 5.000).toFixed(3);
+                    const DOP = (EnterBags / 40 * 26.000).toFixed(3);
+                    const STABILIZER = (EnterBags / 40 * 17.000).toFixed(3);
+                    const EPOXY = (EnterBags / 40 * 22.000).toFixed(3);
+
+                    NBSOutput65.textContent = NBS;
+                    G161Output65.textContent = G161;
+                    DOPOutput65.textContent = DOP;
+                    STABILIZEROutput65.textContent = STABILIZER;
+                    EPOXYOutput65.textContent = EPOXY;
+                } else {
+                    NBSOutput65.textContent = "";
+                    G161Output65.textContent = "";
+                    DOPOutput65.textContent = "";
+                    STABILIZEROutput65.textContent = "";
+                    EPOXYOutput65.textContent = "";
+                }
+            });
+
+            const EnterBagsInput45 = document.getElementById("EnterBags45");
+            const NBSOutput45 = document.getElementById("NBS45");
+            const DOPOutput45 = document.getElementById("DOP45");
+            const STABILIZEROutput45 = document.getElementById("STABILIZER45");
+            const EPOXYOutput45 = document.getElementById("EPOXY45");
+
+            EnterBagsInput45.addEventListener("input", function () {
+                const EnterBags = parseFloat(EnterBagsInput45.value);
+
+                if (!isNaN(EnterBags)) {
+                    const NBS = (EnterBags / 40 * 5.000).toFixed(3);
+                    const DOP = (EnterBags / 40 * 32.000).toFixed(3);
+                    const STABILIZER = (EnterBags / 40 * 14.000).toFixed(3);
+                    const EPOXY = (EnterBags / 40 * 27.000).toFixed(3);
+
+                    NBSOutput45.textContent = NBS;
+                    DOPOutput45.textContent = DOP;
+                    STABILIZEROutput45.textContent = STABILIZER;
+                    EPOXYOutput45.textContent = EPOXY;
+                } else {
+                    NBSOutput45.textContent = "";
+                    DOPOutput45.textContent = "";
+                    STABILIZEROutput45.textContent = "";
+                    EPOXYOutput45.textContent = "";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Rubik:wght@500&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #ecf0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px; /* Increased max-width for better readability */
+            background: #ecf0f3;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 8px 8px 12px #cbced1, -8px -8px 12px white;
+            overflow: auto;
+        }
+
+        .brand-title {
+            font-weight: 750;
+            font-family: 'Ubuntu', sans-serif;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #4d5ce6;
+            letter-spacing: 1px;
+        }
+
+        .inputs {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        label,
+        input,
+        button {
+            display: inline-block;
+            width: 100%;
+            padding: 8px;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            margin: 5px 0;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .input {
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            background-color: #e8e8e8;
+            box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        button {
+            font-family: 'Ubuntu', sans-serif;
+            color: #4d5ce6;
+            padding: 0.7em 1.7em;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 0.5em;
+            background: #e8e8e8;
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s;
+            box-shadow: 6px 6px 12px #c5c5c5,
+                        -6px -6px 12px #ffffff;
+        }
+
+        button:hover {
+            border: 1px solid white;
+        }
+
+        button:active {
+            box-shadow: 4px 4px 12px #c5c5c5,
+                        -4px -4px 12px #ffffff;
+        }
+
+        a {
+            position: absolute;
+            font-size: 8px;
+            bottom: 4px;
+            right: 4px;
+            text-decoration: none;
+            color: rgb(3, 136, 32);
+            background: yellow;
+            border-radius: 10px;
+            padding: 2px;
+        }
+
+        h1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .data-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px; /* Add some space between form and data container */
+        }
+
+        .data-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-container th,
+        .data-container td {
+            border: none;
+            padding: 5px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .data-container th {
+            background: #f5f5f5;
+        }
+
+        .data-container tr:hover {
+            background: #f0f0f0;
+        }
+
+        .data-container button {
+            color: #090909;
+            padding: 0.7em 1.7em;
+            font-size: 18px;
+            font-family: 'Ubuntu', sans-serif;
+            border-radius: 0.5em;
+            background: #e8e8e8;
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s;
+            box-shadow: 6px 6px 12px #c5c5c5,
+                        -6px -6px 12px #ffffff;
+        }
+
+        .data-container button:hover {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form>
+
+            <div class="inputs">
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+
+                <label for="date">Date:</label>
+                <input type="date" id="date">
+
+                <label for="vehicle-no">Vehicle No.:</label>
+                <input type="text" id="vehicle-no">
+
+                <label for="bags">Bags:</label>
+                <input type="text" id="bags">
+            </div>
+
+            <button type="button" onclick="addData();">Add Data</button>
+            <button type="button" onclick="openWhatsApp();">Send Via WhatsApp</button>
+
+            <div id="data-list" class="data-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Vehicle No.</th>
+                            <th>Bags</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-items"></tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var dataList = [];
+
+        function addData() {
+            var name = document.querySelector("#name").value;
+            var date = document.querySelector("#date").value;
+            var vehicleNo = document.querySelector("#vehicle-no").value;
+            var bags = document.querySelector("#bags").value;
+
+            if (name && date && vehicleNo) {
+                var data = {
+                    name: name,
+                    date: date,
+                    vehicleNo: vehicleNo,
+                    bags: bags,
+                };
+                dataList.push(data);
+                updateDataList();
+                sendToGoogleSheet(data);
+
+                // Clear input fields
+                document.querySelector("#name").value = "";
+                document.querySelector("#date").value = "";
+                document.querySelector("#vehicle-no").value = "";
+                document.querySelector("#bags").value = "";
+            }
+        }
+
+        function removeData(index) {
+            dataList.splice(index, 1);
+            updateDataList();
+        }
+
+        function updateDataList() {
+            var dataListTable = document.querySelector("#data-items");
+            dataListTable.innerHTML = "";
+
+            dataList.forEach(function (data, index) {
+                var row = document.createElement("tr");
+
+                var nameCell = document.createElement("td");
+                var dateCell = document.createElement("td");
+                var vehicleNoCell = document.createElement("td");
+                var bagsCell = document.createElement("td");
+                var actionsCell = document.createElement("td");
+
+                nameCell.textContent = data.name;
+                dateCell.textContent = "Date: " + data.date;
+                vehicleNoCell.textContent = "Vehicle No.: " + data.vehicleNo;
+                bagsCell.textContent = "Bags: " + data.bags;
+
+                var removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.addEventListener("click", function () {
+                    removeData(index);
+                });
+
+                actionsCell.appendChild(removeButton);
+
+                row.appendChild(nameCell);
+                row.appendChild(dateCell);
+                row.appendChild(vehicleNoCell);
+                row.appendChild(bagsCell);
+                row.appendChild(actionsCell);
+
+                dataListTable.appendChild(row);
+            });
+        }
+
+        function sendToGoogleSheet(data) {
+            var formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('date', data.date);
+            formData.append('vehicleNo', data.vehicleNo);
+            formData.append('bags', data.bags);
+
+            fetch('https://script.google.com/macros/s/AKfycbzRIV_7TVDxdAVNGf4q3B4gl-0wzz6W9SagfI67rKcXpYJOeKJ4Ilsrm9W16AWdqo6_GQ/exec', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data sent to Google Sheets successfully');
+                    } else {
+                        console.error('Failed to send data to Google Sheets');
+                    }
+                })
+                .catch(error => {
+                    console.error('An error occurred while sending data to Google Sheets:', error);
+                });
+        }
+
+        function formatDate(inputDate) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const date = new Date(inputDate);
+            return date.toLocaleDateString('en-IN', options);
+        }
+
+        function openWhatsApp() {
+            var message = "";
+
+            if (dataList.length > 0) {
+                dataList.forEach(function (data) {
+                    message +=
+                        "Name:         " + data.name + "\n" +
+                        "Date:           " + formatDate(data.date) + "\n" +
+                        "Vehicle:       " + data.vehicleNo + "\n" +
+                        "Bags:           " + data.bags + "\n\n"; // Added one line break for separation
+                });
+
+                // Replace regular spaces with non-breaking spaces
+                message = message.replace(/ /g, '\u00A0');
+
+                var whatsappLink = "https://wa.me/?text=" + encodeURIComponent(message);
+                window.open(whatsappLink, "_blank");
+            } else {
+                // Provide a message or alert if there is no data to send
+                alert("No data to send via WhatsApp. Please add data first.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
