@@ -4,138 +4,225 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reliance Bill Book</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #cfcece; /* soft bill pad cream */
-      margin: 0;
-      padding: 20px;
-    }
+    *, *::before, *::after {
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      background-image: linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
-      background-size: 100% 30px;
-      padding: 30px;
-      border: 1px solid #ccc;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
+body {
+  width: 8.5in;
+  height: 11in;
+  margin: auto;
+  padding: 0.5in;
+  background: #fff;
+  box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 5px;
-    }
-    h2 {
-      text-align: center;
-      font-size: 16px;
-      margin-top: 0;
-    }
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2em;
+}
 
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
+header h1 {
+  background: #000;
+  color: #fff;
+  padding: 0.5em;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  border-radius: 0.25em;
+}
 
-    .info-row label {
-      font-weight: bold;
-    }
+header address {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+/* Article section */
+article address {
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 1em;
+}
 
-    th, td {
-      border: 2px solid #8db6ec;
-      padding: 8px;
-      text-align: center;
-    }
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 2px;
+  margin-bottom: 1.5em;
+  font-size: 0.9em;
+  overflow-x: auto;
+}
 
-    input[type="number"], input[type="text"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 5px;
-      border: 1px solid #dd014a;
-    }
+th, td {
+  border: 1px solid #bbb;
+  border-radius: 0.25em;
+  padding: 0.5em;
+  text-align: left;
+}
 
-    #percentage.has-value {
-      border: 1px solid #007bff;
-    }
+th {
+  background: #eee;
+}
 
-    .totals {
-      margin-top: 20px;
-      font-weight: bold;
-    }
+td input {
+  width: 100%;
+  border: none;
+  font-size: 1em;
+}
 
-    .btn-group {
-      text-align: center;
-      margin-top: 20px;
-    }
+/* Inventory and balance alignment */
+.inventory td:last-child,
+.balance td {
+  text-align: right;
+}
 
-    .btn-group button {
-      padding: 10px 20px;
-      margin: 0 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+/* Button group styling */
+.btn-group {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
 
+.btn-group button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  background: #0078A5;
+  color: #fff;
+  border-radius: 0.25em;
+  border: none;
+}
 
-    @media print {
-      .btn-group {
-        display: none !important;
-      }
-    }
+.btn-group button:hover {
+  background: #00ADEE;
+}
+
+/* Print optimization */
+@media print {
+  .btn-group {
+    display: none;
+  }
+
+  body {
+    box-shadow: none;
+    margin: 0;
+    padding: 0.5in;
+  }
+}
+
+/* Mobile responsive layout */
+@media (max-width: 768px) {
+  body {
+    width: auto;
+    height: auto;
+    padding: 16px;
+    box-shadow: none;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+
+  header h1 {
+    font-size: 1.2em;
+    padding: 0.4em;
+  }
+
+  header address,
+  article address {
+    font-size: 0.9em;
+  }
+
+  table {
+    font-size: 0.8em;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 0.4em;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-group button {
+    width: 100%;
+  }
+}
+
   </style>
 </head>
 <body>
-  <div class="container" id="billArea">
-    <h1>Reliance Plastic Industries</h1>
-    <h2>27, National Highway, Nr. Galaxy Petrolium, Rajkot Road, Bhojjpara, Gondal-360311</h2>
-
-    <div class="info-row">
-      <div><label>Bill No:</label> <input type="text" id="billNo" value="001" /></div>
-      <div><label>Date/Time:</label> <span id="datetime"></span></div>
+  <header>
+    <div>
+      <h1>Reliance Plastic Industries</h1>
+      <address>
+        <p>27, National Highway</p>
+        <p>Nr. Galaxy Petroleum</p>
+        <p>Rajkot Road, Bhojjpara</p>
+        <p>Gondal-360311</p>
+      </address>
     </div>
-
-    <div class="info-row">
-      <div style="flex: 1;"><label>Customer Name:</label> <input type="text" id="customerName" placeholder="Enter customer name" /></div>
+    <div>
+      <p>Bill No: <input type="text" id="billNo" value="001"></p>
+      <p>Date/Time: <span id="datetime"></span></p>
     </div>
+  </header>
 
-    <table>
-      <colgroup>
-        <col style="width: 30%;">
-        <col style="width: 30%;">
-        <col style="width: 60%;"> <!-- Total column wider -->
-      </colgroup>
+  <article>
+    <address>
+      Customer Name: <input type="text" id="customerName" placeholder="Enter customer name">
+    </address>
+
+    <table class="inventory">
       <thead>
-        <tr><th>Weight</th><th>Price</th><th>Total</th></tr>
+        <tr><th>Weight</th><th>Price</th><th>Total</th><th>Action</th></tr>
       </thead>
-      <tbody>
-        <tr><td><input type="number" id="weight1"></td><td><input type="number" id="price1"></td><td id="total1">0</td></tr>
-        <tr><td><input type="number" id="weight2"></td><td><input type="number" id="price2"></td><td id="total2">0</td></tr>
-        <tr><td><input type="number" id="weight3"></td><td><input type="number" id="price3"></td><td id="total3">0</td></tr>
-        <tr><td><input type="number" id="weight4"></td><td><input type="number" id="price4"></td><td id="total4">0</td></tr>
-        <tr><td><input type="number" id="weight5"></td><td><input type="number" id="price5"></td><td id="total5">0</td></tr>
-        <tr><td><input type="number" id="weight6"></td><td><input type="number" id="price6"></td><td id="total6">0</td></tr>
-        <tr><td><input type="number" id="weight7"></td><td><input type="number" id="price7"></td><td id="total7">0</td></tr>
+      <tbody id="itemTableBody">
       </tbody>
     </table>
-
-    <div class="totals">
-      <label>Percentage:</label>
-      <input type="number" id="percentage" placeholder="Enter %" />
-      <p>Total without %: <span id="result-totalWithoutPercentage">0</span></p>
-      <p>Total (%): <span id="result-totalPercentage">0</span></p>
-      <p>Grand Total: <span id="result-overallTotal">0</span></p>
+    <div class="btn-group">
+      <button onclick="addRow()">➕ Add Row</button>
     </div>
 
-  </div>
+    <table class="balance">
+      <tr>
+        <th>Percentage (%)</th>
+        <td><input type="number" id="percentage" placeholder="%" /></td>
+      </tr>
+      <tr>
+        <th>Total without %</th>
+        <td id="result-totalWithoutPercentage">0</td>
+      </tr>
+      <tr>
+        <th>Total (%)</th>
+        <td id="result-totalPercentage">0</td>
+      </tr>
+      <tr>
+        <th>Grand Total</th>
+        <td><strong id="result-overallTotal">0</strong></td>
+      </tr>
+    </table>
+  </article>
 
   <div class="btn-group">
     <button onclick="window.print()">🖨️ Print</button>
@@ -143,38 +230,52 @@
   </div>
 
   <script>
-    const rowCount = 7;
+    let rowCount = 0;
+
+    function addRow(weight = '', price = '') {
+      rowCount++;
+      const tbody = document.getElementById('itemTableBody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input type="number" id="weight${rowCount}" value="${weight}" /></td>
+        <td><input type="number" id="price${rowCount}" value="${price}" /></td>
+        <td id="total${rowCount}">0</td>
+        <td><button onclick="removeRow(this)">❌</button></td>
+      `;
+      tbody.appendChild(row);
+
+      document.getElementById(`weight${rowCount}`).addEventListener('input', calculateTotal);
+      document.getElementById(`price${rowCount}`).addEventListener('input', calculateTotal);
+      calculateTotal();
+    }
+
+    function removeRow(button) {
+      button.closest('tr').remove();
+      calculateTotal();
+    }
 
     function calculateTotal() {
       let totalWithoutPercentage = 0;
       for (let i = 1; i <= rowCount; i++) {
-        const weight = parseFloat(document.getElementById(`weight${i}`).value) || 0;
-        const price = parseFloat(document.getElementById(`price${i}`).value) || 0;
-        const total = weight * price;
-        document.getElementById(`total${i}`).textContent = Math.trunc(total);
-        totalWithoutPercentage += total;
+        const weightInput = document.getElementById(`weight${i}`);
+        const priceInput = document.getElementById(`price${i}`);
+        const totalCell = document.getElementById(`total${i}`);
+        if (weightInput && priceInput && totalCell) {
+          const weight = parseFloat(weightInput.value) || 0;
+          const price = parseFloat(priceInput.value) || 0;
+          const total = weight * price;
+          totalCell.textContent = Math.trunc(total);
+          totalWithoutPercentage += total;
+        }
       }
       const percentage = parseFloat(document.getElementById("percentage").value) || 0;
       const totalPercentage = totalWithoutPercentage * (percentage / 100);
       const overallTotal = totalWithoutPercentage + totalPercentage;
+
       document.getElementById("result-totalWithoutPercentage").textContent = Math.trunc(totalWithoutPercentage);
       document.getElementById("result-totalPercentage").textContent = Math.trunc(totalPercentage);
       document.getElementById("result-overallTotal").textContent = Math.trunc(overallTotal);
     }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      for (let i = 1; i <= rowCount; i++) {
-        document.getElementById(`weight${i}`).addEventListener('input', calculateTotal);
-        document.getElementById(`price${i}`).addEventListener('input', calculateTotal);
-      }
-      document.getElementById('percentage').addEventListener('input', function () {
-        this.classList.toggle('has-value', this.value.trim() !== '');
-        calculateTotal();
-      });
-
-      calculateTotal();
-      document.getElementById('datetime').textContent = new Date().toLocaleString();
-    });
 
     function downloadPDF() {
       const { jsPDF } = window.jspdf;
@@ -182,7 +283,7 @@
       doc.setFontSize(16);
       doc.text("Reliance Plastic Industries", 15, 15);
       doc.setFontSize(10);
-      doc.text("27, National Highway, Nr. Galaxy Petrolium, Rajkot Road, Bhojjpara, Gondal-360311", 15, 22);
+      doc.text("27, National Highway, Nr. Galaxy Petroleum, Rajkot Road, Bhojjpara, Gondal-360311", 15, 22);
       doc.setFontSize(12);
       doc.text(`Bill No: ${document.getElementById('billNo').value}`, 15, 30);
       doc.text(`Date/Time: ${document.getElementById('datetime').textContent}`, 100, 30);
@@ -190,18 +291,18 @@
 
       const data = [];
       for (let i = 1; i <= rowCount; i++) {
-        const weight = document.getElementById(`weight${i}`).value || '-';
-        const price = document.getElementById(`price${i}`).value || '-';
-        const total = document.getElementById(`total${i}`).textContent || '0';
-        data.push([weight, price, total]);
+        const weightInput = document.getElementById(`weight${i}`);
+        const priceInput = document.getElementById(`price${i}`);
+        const totalCell = document.getElementById(`total${i}`);
+        if (weightInput && priceInput && totalCell) {
+          const weight = weightInput.value || '-';
+          const price = priceInput.value || '-';
+          const total = totalCell.textContent || '0';
+          data.push([weight, price, total]);
+        }
       }
 
-      doc.autoTable({
-        head: [["Weight", "Price", "Total"]],
-        body: data,
-        startY: 42
-      });
-
+      doc.autoTable({ head: [["Weight", "Price", "Total"]], body: data, startY: 42 });
       doc.autoTable({
         head: [["Description", "Amount"]],
         body: [
@@ -209,11 +310,16 @@
           ["Total (%)", document.getElementById("result-totalPercentage").textContent],
           ["Grand Total", document.getElementById("result-overallTotal").textContent]
         ],
-        startY: doc.autoTable.previous.finalY + 10
+        startY: doc.lastAutoTable.finalY + 10
       });
-
       doc.save("Reliance-Bill-Book.pdf");
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('percentage').addEventListener('input', calculateTotal);
+      document.getElementById('datetime').textContent = new Date().toLocaleString();
+      for (let i = 0; i < 7; i++) addRow();
+    });
   </script>
 </body>
 </html>
